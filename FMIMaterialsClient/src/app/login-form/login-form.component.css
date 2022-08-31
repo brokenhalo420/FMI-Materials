@@ -1,0 +1,33 @@
+.login-window{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.select-login-button,
+.select-register-button {
+    background: rgb(220, 217, 217);
+    width: 200px;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 5px;
+    justify-content: center;
+    text-align: center;
+    font-size: 30px;
+    padding-top: 5px;
+    cursor: pointer;
+}
+
+.select-login-button:hover,
+.select-register-button:hover {
+    background: rgb(94, 94, 108);
+}
