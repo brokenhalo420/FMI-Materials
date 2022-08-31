@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/library
+    username: root
+    password: U8j+vk42y5CNNPnT
+    hikari:
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/library
+
+  jpa:
+    generate-ddl: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: validate
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
