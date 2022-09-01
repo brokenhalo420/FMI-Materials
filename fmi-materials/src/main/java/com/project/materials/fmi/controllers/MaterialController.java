@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
@@ -27,33 +28,23 @@ public class MaterialController {
         return service.getAllMaterials();
     }
 
-    @GetMapping("/by-name/{name:.*}")
-    public Iterable<MaterialDTO> getMaterialsByName(@PathVariable String name){
+    @GetMapping("/by-name")
+    public Iterable<MaterialDTO> getMaterialsByName(@RequestParam String name){
         return service.getMaterialsByName(name);
     }
 
-    @GetMapping("/by-id/{id}")
-    public Optional<MaterialDTO> getMaterialById(@PathVariable long id){
-        return service.getMaterial(id);
-    }
-
     @PostMapping("/add-new-material")
-    public void addMaterial(@RequestBody MaterialDTO material){
-        service.addMaterial(material);
+    public void addMaterial(@RequestParam String courseName,@RequestBody MaterialDTO material){
+        service.addMaterial(courseName, material);
     }
 
-    @DeleteMapping("/delete-by-name/{name=.*}")
-    public void deleteMaterialByName(@PathVariable String name){
+    @DeleteMapping("/delete-by-name")
+    public void deleteMaterialByName(@RequestParam String name){
         service.deleteMaterialByName(name);
     }
 
-    @DeleteMapping("/delete-by-id/{id}")
-    public void deleteMaterialById(@PathVariable long id){
-        service.deleteMaterial(id);
-    }
-
-    @GetMapping("/get-by-course/{name=.*}")
-    public Iterable<MaterialDTO> getMaterialsByCourse(String name){
-        return this.service.getMaterialsByCourse(name);
+    @GetMapping("/get-by-course")
+    public Iterable<MaterialDTO> getMaterialsByCourse(@RequestParam String courseName){
+        return this.service.getMaterialsByCourse(courseName);
     }
 }

@@ -1,0 +1,233 @@
+{
+	"info": {
+		"_postman_id": "8f3eb697-853b-4740-ae01-9f8321b216c1",
+		"name": "User",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20815968"
+	},
+	"item": [
+		{
+			"name": "Add User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"postman@gmail.com\",\r\n    \"name\":\"Postman Add User\",\r\n    \"password\": \"IAmPostman123\",\r\n    \"type\":\"Admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Favorites for User by email",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/favorites?email=mario.nikolov@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"favorites"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "mario.nikolov@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User by Email and Password",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/get?email=mario.nikolov@gmail.com&password=IAmMario123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"get"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "mario.nikolov@gmail.com"
+						},
+						{
+							"key": "password",
+							"value": "IAmMario123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get users by Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/get-by-name?name=Mario Nikolov",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"get-by-name"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Mario Nikolov"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User by email and password",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/delete?email=postman@gmail.com&password=IAmPostman123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "postman@gmail.com"
+						},
+						{
+							"key": "password",
+							"value": "IAmPostman123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Course to Favorites",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/favorites/add?courseName=Algebra&email=mario.nikolov@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"favorites",
+						"add"
+					],
+					"query": [
+						{
+							"key": "courseName",
+							"value": "Algebra"
+						},
+						{
+							"key": "email",
+							"value": "mario.nikolov@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Course from Favorites",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/favorites/remove?courseName=Algebra&email=mario.nikolov@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"favorites",
+						"remove"
+					],
+					"query": [
+						{
+							"key": "courseName",
+							"value": "Algebra"
+						},
+						{
+							"key": "email",
+							"value": "mario.nikolov@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

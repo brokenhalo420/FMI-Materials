@@ -15,19 +15,19 @@ public class RepositoryConfigurations {
 
     @Bean
     @Autowired
-    public UserRepositoryService getUserService(UserDB db){
-        return new UserRepositoryService(db);
+    public UserRepositoryService getUserService(UserDB db, CourseDB courseDB){
+        return new UserRepositoryService(db, courseDB);
     }
 
     @Bean
     @Autowired
-    public MaterialRepositoryService getMaterialService(MaterialDB db, CourseDB crsDb){
-        return new MaterialRepositoryService(db, crsDb);
+    public MaterialRepositoryService getMaterialService(MaterialDB db, CourseDB courseDb){
+        return new MaterialRepositoryService(db, courseDb);
     }
 
     @Bean
     @Autowired
-    public CourseRepositoryService getCourseMaterial(CourseDB db){
-        return new CourseRepositoryService(db);
+    public CourseRepositoryService getCourseMaterial(CourseDB db, MaterialDB materialDB){
+        return new CourseRepositoryService(db, materialDB);
     }
 }

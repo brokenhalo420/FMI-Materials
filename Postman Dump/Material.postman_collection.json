@@ -1,0 +1,143 @@
+{
+	"info": {
+		"_postman_id": "546f9ba2-77a7-4d20-a60a-5e15ecd52f7b",
+		"name": "Material",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20815968"
+	},
+	"item": [
+		{
+			"name": "Create new Material for Course",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"filePath\": \"C:\\\\Documents\\\\Lecture1.mp4\",\r\n  \"group\": \"Biology\",\r\n  \"name\": \"Lecture 1\",\r\n  \"type\": \"Video\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/material/add-new-material?courseName=Microcells",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"material",
+						"add-new-material"
+					],
+					"query": [
+						{
+							"key": "courseName",
+							"value": "Microcells"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Materials",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/material/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"material",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Materials by name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/material/by-name?name=Lecture 1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"material",
+						"by-name"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Lecture 1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get materials for Course",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/material/get-by-course?courseName=Microcells",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"material",
+						"get-by-course"
+					],
+					"query": [
+						{
+							"key": "courseName",
+							"value": "Microcells"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete material by name",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/material/delete-by-name?name=Lecture 1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"material",
+						"delete-by-name"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Lecture 1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
