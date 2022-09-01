@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
@@ -32,18 +33,8 @@ public class CourseController {
         service.addCourse(course);
     }
 
-    @DeleteMapping("/delete-by-id/{id}")
-    public void deleteCourse(@PathVariable Long id){
-        service.deleteCourse(id);
-    }
-
-    @GetMapping("/get-course/{id}")
-    public Optional<CourseDTO> getCourse(@PathVariable Long id){
-        return service.getCourse(id);
-    }
-
-    @DeleteMapping("/delete-by-name/{name:.*}")
-    public void deleteCourseByName(@PathVariable String name){
+    @DeleteMapping("/delete-by-name")
+    public void deleteCourseByName(@RequestParam String name){
         service.deleteCourseByName(name);
     }
 }

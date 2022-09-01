@@ -33,17 +33,15 @@ public class MaterialRepositoryService {
                 .map(MaterialMapper::toDTO).collect(Collectors.toList());
     }
 
-    public void addMaterial(MaterialDTO material){
+    public void addMaterial(String courseName, MaterialDTO material){
         Material entry = new Material();
-        materialRepository.save(MaterialMapper.fromDTO(entry,material));
-    }
-
-    public Optional<MaterialDTO> getMaterial(long id){
-        return materialRepository.findById(id).map(MaterialMapper::toDTO);
-    }
-
-    public void deleteMaterial(long id){
-        materialRepository.deleteById(id);
+        Course queryCourse = courseRepository.findAll().stream().filter(x -> x.getName().equals(courseName))
+        .findFirst().get();
+        MaterialMapper.fromDTO(entry,material);
+        entry.setCourseId(queryCourse);
+        materialRepository.save(entry);
+        queryCourse.getMaterials().add(entry);
+        courseRepository.save(queryCourse);
     }
 
     public void deleteMaterialByName(String name){
@@ -53,18 +51,20 @@ public class MaterialRepositoryService {
         } catch (NoSuchElementException e){
             return;
         }
-
+        Course course = material.getCourseId();
+        course.getMaterials().remove(material);
         materialRepository.delete(material);
+        courseRepository.save(course);
     }
 
-    public Iterable<MaterialDTO> getMaterialsByCourse(String name){
-        Course queryCourse = this.courseRepository.findAll().stream().filter(x -> name.equals(x.getName())).findFirst().get();
+    public Iterable<MaterialDTO> getMaterialsByCourse(String courseName){
+        Course queryCourse = this.courseRepository.findAll().stream().filter(x -> courseName.equals(x.getName())).findFirst().get();
 
         if(queryCourse == null){
             return new ArrayList<MaterialDTO>();
         }
 
-        return this.materialRepository.findAll().stream().filter(x -> x.getCourseId().equals(queryCourse.getId())).map(MaterialMapper::toDTO).collect(Collectors.toList());
+        return queryCourse.getMaterials().stream().map(MaterialMapper::toDTO).collect(Collectors.toList());
     }
 
 }
