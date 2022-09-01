@@ -1,0 +1,15 @@
+<div class="login-window">
+    <div class="buttons">
+        <div class="select-login-button" (click)="changeActive(1)">
+            Login
+        </div>
+        <div class="select-register-button" (click)="changeActive(2)">
+            Register
+        </div>
+    </div>
+
+    <div class="output">
+        <app-login-in *ngIf="onScreen===1"></app-login-in>
+        <app-register *ngIf="onScreen===2"></app-register>
+    </div>
+</div>

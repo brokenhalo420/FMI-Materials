@@ -1,0 +1,39 @@
+<header class="client-top-bar">
+  <div class="logo">
+    <img src="assets/logo-white.png" class="logo-fmi">
+  </div>
+  <div class="client-title">
+    <h3>FMI Materials ❤️</h3>
+  </div>
+  <div class="nav-bar">
+    <button *ngIf="!isLogged" (click)="activityIndex=0" [class.active]="activityIndex===0" [routerLink]="'login-form'">Login</button>
+    <div class="operation-buttons" *ngIf="isLogged">
+      <div class="clickable" (click)="activityIndex=1" [class.active]="activityIndex === 1" [routerLink]="'courses'">Courses</div>
+      <div class="search">
+        <input type="text">
+        <div class="clickable">Search</div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="body">
+  <router-outlet class="ea-config-tool-router-outlet"></router-outlet>
+</div>
+
+<div class="output">
+  <div *ngIf="courses!=null">
+    <div *ngFor="let course of courses">
+      <p [(ngModel)]="course.name"></p>
+      <p [(ngModel)]="course.groups"></p>
+      <p [(ngModel)]="course.materialType"></p>
+      <p>Materials: </p>
+      <div *ngFor="let material in getMaterials(course)">
+        <p [(ngModel)]="material.name"></p>
+        <p [(ngModel)]="material.filePath"></p>
+        <p [(ngModel)]="material.type"></p>
+        <p [(ngModel)]="material.groups"></p>
+      </div>
+      <p>=====================================</p>
+    </div>
+  </div>
+</div>
