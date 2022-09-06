@@ -1,0 +1,58 @@
+<div class="materials-window" *ngIf="isLogged">
+    <div class="materials">
+        <div class="buttons" *ngIf="!isInFavorites">
+            <button class="add" (click)="createMaterial()">Add new Material</button>
+        </div>
+        <mat-expansion-panel class="mat-expansion-panel-container" hideToggle *ngFor="let material of materials; let i=index">
+            <mat-expansion-panel-header class="mat-expansion-panel-container-header">
+                <mat-panel-title class="mat-expansion-panel-container-title">
+                    {{material.name}}
+                </mat-panel-title>
+                <mat-panel-description class="mat-expansion-panel-container-description">
+                    {{course.groups}}
+                    <div class="buttons" *ngIf="!isInFavorites">
+                        <button (click)="editMaterial(i)">Edit</button>
+                        <button (click)="deleteMaterial(i)">Delete</button>
+                    </div>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+        </mat-expansion-panel>
+    </div>
+
+    <div class="material-editor" *ngIf="editor">
+        <div class="field">
+            <label>Name</label>
+            <input type="text" [(ngModel)]="editorMaterial.name">
+        </div>
+        <div class="field">
+            <label>FilePath</label>
+            <input type="text" [(ngModel)]="editorMaterial.filePath">
+        </div>
+        <div class="field">
+            <label>Groups</label>
+            <mat-form-field appearance="fill">
+                <mat-label>Groups</mat-label>
+                <mat-select [(value)]="editorMaterial.group">
+                    <mat-option *ngFor="let group of groupsAsString" [value]="group">
+                        {{group}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="field">
+            <label>Type</label>
+            <mat-form-field appearance="fill">
+                <mat-label>Type</mat-label>
+                <mat-select [(value)]="editorMaterial.type">
+                    <mat-option *ngFor="let type of materialTypesAsString" [value]="type">
+                        {{type}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="buttons editor-save-button">
+            <button (click)="saveNewMaterial()">Save course</button>
+            <button (click)="cancelEditor()">Cancel</button>
+        </div>
+    </div>
+</div>
