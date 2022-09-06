@@ -1,3 +1,4 @@
+import { CryptorService } from './../../../utilities/cryptor/cryptor.service';
 import { UserService } from './../../../services/user-service/user-service.service';
 import { User } from './../../../models/user';
 import { Component, OnInit } from '@angular/core';
@@ -9,19 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
   user:User = {} as User;
-  constructor(private service:UserService) { }
+  constructor(private service:UserService, private cryptor:CryptorService) { }
 
   ngOnInit(): void {
   }
 
   login(){
-    if(this.service.getUser(this.user.email,this.user.password) != null){
-      document.cookie  += `user=${this.user.email}`;
-      alert("Logged in succesfully");
-      document.location.href='http://localhost:4200';
-    }
-    else {
-      alert("Did not log in succesfully");
-    }
+    let user!:User;
+    this.service.getUser(this.user.email,this.cryptor.encrypt(this.user.password)).then(x => {
+      if(x){
+        document.cookie  += `user=${x.email}`;
+        alert("Logged in succesfully");
+        document.location.href='http://localhost:4200';
+      }
+      else {
+        alert("Did not log in succesfully");
+      }
+    });
   }
 }

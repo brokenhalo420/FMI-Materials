@@ -1,17 +1,19 @@
-import { UserService } from './../services/user-service/user-service.service';
-import { groupsAsString } from './../enums/group-type';
-import { CourseService } from './../services/course-service/course-service.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { Course } from '../models/course';
-import { MaterialService } from '../services/material-service/material-service.service';
+import { groupsAsString } from '../enums/group-type';
 import { materialTypesAsString } from '../enums/material-type';
+import { Course } from '../models/course';
+import { CourseService } from '../services/course-service/course-service.service';
+import { MaterialService } from '../services/material-service/material-service.service';
+import { UserService } from '../services/user-service/user-service.service';
 
 @Component({
-  selector: 'app-courses',
-  templateUrl: './courses.component.html',
-  styleUrls: ['./courses.component.css']
+  selector: 'app-search-results',
+  templateUrl: './search-results.component.html',
+  styleUrls: ['./search-results.component.css']
 })
-export class CoursesComponent implements OnInit {
+export class SearchResultsComponent implements OnInit {
+
+  search:string = "";
 
   isLogged: boolean = document.cookie.indexOf('user=') == -1 ? false : true;
 
@@ -31,7 +33,6 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadFavorite();
-    this.loadCourses();
   }
 
   createCourse() {
@@ -53,7 +54,7 @@ export class CoursesComponent implements OnInit {
   }
 
   loadCourses() {
-    this.courseService.getAllCourses().then(data => {
+    this.courseService.getCoursesByName(this.search).then(data => {
       data?.forEach(x => {
         this.courses.push(x);
       })
@@ -119,4 +120,5 @@ export class CoursesComponent implements OnInit {
     this.userService.removeFromFavorites(this.getCookie('user'),this.courses[index]);
     window.location.reload();
   }
+
 }

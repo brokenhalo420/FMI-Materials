@@ -1,15 +1,14 @@
 <div class="login-window">
     <div class="buttons">
-        <div class="select-login-button" (click)="changeActive(1)">
+        <button class="select-login-button" (click)="changeActive(1)" [routerLink]="'login'">
             Login
-        </div>
-        <div class="select-register-button" (click)="changeActive(2)">
+        </button>
+        <button class="select-register-button" (click)="changeActive(2)" [routerLink]="'register'">
             Register
-        </div>
+        </button>
     </div>
 
     <div class="output">
-        <app-login-in *ngIf="onScreen===1"></app-login-in>
-        <app-register *ngIf="onScreen===2"></app-register>
+        <router-outlet></router-outlet>
     </div>
 </div>

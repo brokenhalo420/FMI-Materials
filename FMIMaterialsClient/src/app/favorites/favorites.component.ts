@@ -1,22 +1,21 @@
-import { UserService } from './../services/user-service/user-service.service';
-import { groupsAsString } from './../enums/group-type';
-import { CourseService } from './../services/course-service/course-service.service';
-import { Component, Input, OnInit } from '@angular/core';
-import { Course } from '../models/course';
-import { MaterialService } from '../services/material-service/material-service.service';
+import { Component, OnInit } from '@angular/core';
+import { groupsAsString } from '../enums/group-type';
 import { materialTypesAsString } from '../enums/material-type';
+import { Course } from '../models/course';
+import { CourseService } from '../services/course-service/course-service.service';
+import { MaterialService } from '../services/material-service/material-service.service';
+import { UserService } from '../services/user-service/user-service.service';
 
 @Component({
-  selector: 'app-courses',
-  templateUrl: './courses.component.html',
-  styleUrls: ['./courses.component.css']
+  selector: 'app-favorites',
+  templateUrl: './favorites.component.html',
+  styleUrls: ['./favorites.component.css']
 })
-export class CoursesComponent implements OnInit {
+export class FavoritesComponent implements OnInit {
 
   isLogged: boolean = document.cookie.indexOf('user=') == -1 ? false : true;
 
   courses: Course[] = [];
-  materials: [{}] = [{}];
 
   editor: boolean = false;
   editorCourse: Course = {} as Course;
@@ -38,20 +37,6 @@ export class CoursesComponent implements OnInit {
     this.editor = true;
   }
 
-  saveNewCourse() {
-    if (this.oldName === "") {
-      this.courseService.addCourse(this.editorCourse);
-      this.courses.push(this.editorCourse);
-    }
-    else {
-      this.courseService.editCourse(this.oldName, this.editorCourse);
-      this.courses[this.courses.indexOf(this.editorCourse)] = this.editorCourse;
-      this.oldName = "";
-    }
-    this.editor = false;
-    this.editorCourse = {} as Course;
-  }
-
   loadCourses() {
     this.courseService.getAllCourses().then(data => {
       data?.forEach(x => {
@@ -60,22 +45,6 @@ export class CoursesComponent implements OnInit {
     }).catch(x => {
       console.log('Could not retrieve courses');
     });
-  }
-
-  cancelEditor() {
-    this.editorCourse = {} as Course;
-    this.editor = false;
-  }
-
-  deleteCourse(index: number) {
-    this.courseService.deleteCourseByName(this.courses[index].name);
-    this.courses.splice(index, 1);
-  }
-
-  editCourse(index: number) {
-    this.editorCourse = this.courses[index];
-    this.editor = true;
-    this.oldName = this.editorCourse.name;
   }
 
   loadFavorite() {
@@ -107,12 +76,6 @@ export class CoursesComponent implements OnInit {
       }).map(cookie => {
         return decodeURIComponent(cookie.substring(nameLenPlus));
       })[0];
-  }
-
-  favorite(index:number){
-    this.userService.addToFavorite(this.getCookie('user'),this.courses[index]);
-    this.loadFavorite();
-    window.location.reload();
   }
 
   unfavorite(index:number){

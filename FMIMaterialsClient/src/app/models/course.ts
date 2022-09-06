@@ -3,5 +3,5 @@ import { GroupType } from './../enums/group-type';
 export interface Course {
     name:string;
     groups:GroupType;
-    materialType:MaterialType;
+    type:MaterialType;
 }

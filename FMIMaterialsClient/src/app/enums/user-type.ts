@@ -3,4 +3,6 @@ export enum UserType {
     User
 }
 
-export const userTypesAsString = Object.keys(UserType).filter((v) => !isNaN(Number(v)));
+export const userTypesAsString = Object.keys(UserType).filter((item) => {
+    return isNaN(Number(item));
+});

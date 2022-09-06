@@ -1,7 +1,8 @@
 <div class="courses-window" *ngIf="isLogged">
-    <div class="buttons">
-        <button (click)="createCourse()">Create Course</button>
-    </div>
+    <div class="search">
+        <input type="text" [(ngModel)]="search">
+        <button (click)="loadCourses()">Search</button>
+      </div>
     <div class="courses">
         <mat-expansion-panel class="mat-expansion-panel-container" hideToggle *ngFor="let course of courses; let i=index">
             <mat-expansion-panel-header class="mat-expansion-panel-container-header">

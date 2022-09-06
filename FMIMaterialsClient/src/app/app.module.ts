@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { MaterialService } from './services/material-service/material-service.service';
 import { CourseService } from './services/course-service/course-service.service';
@@ -12,6 +13,11 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { LoginComponent } from './login-form/submodels/login/login.component';
 import { RegisterComponent } from './login-form/submodels/register/register.component';
 import { FormsModule } from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MaterialsComponent } from './materials/materials.component'
+import { MatSelectModule } from '@angular/material/select';
+import { FavoritesComponent } from './favorites/favorites.component';
+import { SearchResultsComponent } from './search-results/search-results.component'
 
 @NgModule({
   declarations: [
@@ -20,15 +26,27 @@ import { FormsModule } from '@angular/forms';
     LoginFormComponent,
     LoginComponent,
     RegisterComponent,
+    MaterialsComponent,
+    FavoritesComponent,
+    SearchResultsComponent,
 ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     RouterModule.forRoot([
-      {path: 'login-form', component: LoginFormComponent},
+      {path: 'login-form', component: LoginFormComponent, children: [
+        {path: 'login', component:LoginComponent},
+        {path: 'register', component:RegisterComponent}
+      ]},
+      {path: 'courses', component:CoursesComponent},
+      {path:'favorites', component:FavoritesComponent},
+      {path: 'search', component:SearchResultsComponent}
     ]),
-    FormsModule
+    FormsModule,
+    MatExpansionModule,
+    BrowserAnimationsModule,
+    MatSelectModule
   ],
   providers: [
     UserService,

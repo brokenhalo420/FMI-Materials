@@ -1,0 +1,20 @@
+<div class="favorites-window" *ngIf="isLogged">
+    <div class="favorites">
+        <mat-expansion-panel class="mat-expansion-panel-container" hideToggle *ngFor="let course of favorites; let i=index">
+            <mat-expansion-panel-header class="mat-expansion-panel-container-header">
+                <mat-panel-title class="mat-expansion-panel-container-title">
+                    {{course.name}}
+                </mat-panel-title>
+                <mat-panel-description class="mat-expansion-panel-container-description">
+                    {{course.groups}}
+                    <div class="buttons">
+                        <button *ngIf="isFavorite(i)" (click)="unfavorite(i)">Unfavorite</button>
+                    </div>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="mat-field">
+                <app-materials [course]="course" [isInFavorites]="true">
+                </app-materials>
+            </div>
+        </mat-expansion-panel>
+    </div>

@@ -9,7 +9,7 @@
     </div>
     <div class="field">
         <label class="label">Password</label>
-        <input type="password" [(ngModel)]="user.password">
+        <input type="password" [(ngModel)]="user.password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$">
     </div>
-    <div class="button" (click)="register()">Login</div>
+    <button class="button" (click)="register()">Register</button>
 </div>
