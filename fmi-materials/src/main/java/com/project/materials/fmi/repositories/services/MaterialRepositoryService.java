@@ -67,4 +67,15 @@ public class MaterialRepositoryService {
         return queryCourse.getMaterials().stream().map(MaterialMapper::toDTO).collect(Collectors.toList());
     }
 
+    public void editMaterial(String name, MaterialDTO material){
+        Material materialInDB = this.materialRepository.findAll().stream().filter(x -> x.getName().equals(name)).findFirst().get();
+
+        materialInDB.setName(material.getName());
+        materialInDB.setType(material.getType());
+        materialInDB.setGroup(material.getGroup());
+        materialInDB.setFilePath(material.getFilePath());
+
+        this.materialRepository.save(materialInDB);
+    }
+
 }

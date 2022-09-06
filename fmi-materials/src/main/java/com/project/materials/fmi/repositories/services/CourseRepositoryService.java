@@ -27,7 +27,7 @@ public class CourseRepositoryService {
     }
 
     public Iterable<CourseDTO> getCoursesByName(String name){
-        return courseRepository.findAll().stream().filter(course -> name.equals(course.getName())).map(CourseMapper::toDTO)
+        return courseRepository.findAll().stream().filter(course -> course.getName().contains(name)).map(CourseMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -49,6 +49,20 @@ public class CourseRepositoryService {
         list.forEach(x -> materialRepository.delete(x));
 
         courseRepository.delete(course);
+    }
+
+    public void editCourse(CourseDTO courseToModify, String oldName){
+        Course courseInDB = courseRepository.findAll().stream().filter(x -> x.getName().equals(oldName)).findFirst().get();
+
+        if(courseInDB == null){
+            return;
+        }
+
+        courseInDB.setName(courseToModify.getName());
+        courseInDB.setMaterialType(courseToModify.getType());
+        courseInDB.setGroup(courseToModify.getGroups());
+
+        courseRepository.save(courseInDB);
     }
 
 }
