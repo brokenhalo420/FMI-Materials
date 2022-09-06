@@ -4,4 +4,6 @@ export enum GroupType {
     Biology,
 }
 
-export const groupsAsString = Object.keys(GroupType).filter((v) => !isNaN(Number(v)));
+export const groupsAsString = Object.keys(GroupType).filter((item) => {
+    return isNaN(Number(item));
+});

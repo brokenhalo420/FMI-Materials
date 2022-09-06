@@ -3,6 +3,6 @@ import { MaterialType } from './../enums/material-type';
 export interface Material {
     name:string;
     filePath:string;
-    materialType:MaterialType;
+    type:MaterialType;
     group:GroupType;
 }

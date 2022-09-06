@@ -7,4 +7,6 @@ export enum MaterialType {
     Powerpoint
 }
 
-export const materialTypesAsString = Object.keys(MaterialType).filter((v) => !isNaN(Number(v)));
+export const materialTypesAsString = Object.keys(MaterialType).filter((item) => {
+    return isNaN(Number(item));
+});

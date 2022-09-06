@@ -81,8 +81,3 @@
 mat-form-field {
     background-color: white;
 }
-
-.buttons {
-    display: flex;
-    flex-direction: row;
-}

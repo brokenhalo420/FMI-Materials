@@ -11,31 +11,27 @@ export class MaterialService {
   constructor(private client: HttpClient) {
   }
 
-  addMaterial(material:Material){
-    this.client.post(`http://localhost:8080/material/add-new-material`,material).toPromise();
+  addMaterial(courseName:string, material:Material){
+    this.client.post(`http://localhost:8080/material/add-new-material?courseName=${courseName}`,material).toPromise();
   }
 
   getAllMaterials(){
     return this.client.get<Material[]>(`http://localhost:8080/material/all`).toPromise();
   }
 
-  getMaterialById(id:number){
-    return this.client.get<Material>(`http://localhost:8080/material/all/${id}`).toPromise();
-  }
-
   getMaterialsByName(name:string){
-    return this.client.get<Material[]>(`http://localhost:8080/material/by-name/${name}`).toPromise();
-  }
-
-  deleteMaterialById(id:number){
-    this.client.delete(`http://localhost:8080/material/delete-by-id/${id}`).toPromise();
+    return this.client.get<Material[]>(`http://localhost:8080/material/by-name?name=${name}`).toPromise();
   }
 
   deleteMaterialByName(name:string){
-    this.client.delete(`http://localhost:8080/material/delete-by-name/${name}`).toPromise();
+    this.client.delete(`http://localhost:8080/material/delete-by-name?name=${name}`).toPromise();
   }
 
   getMaterialsByCourse(course:Course){
-    return this.client.get<Material[]>(`http://localhost:8080/material/get-by-course/${name}`).toPromise();
+    return this.client.get<Material[]>(`http://localhost:8080/material/get-by-course?courseName=${course.name}`).toPromise();
+  }
+
+  editMaterial(oldName:string, material:Material){
+    this.client.put(`http://localhost:8080/material/edit?oldName=${oldName}`, material).toPromise();
   }
 }
