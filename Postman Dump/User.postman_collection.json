@@ -61,7 +61,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/user/favorites?email=mario.nikolov@gmail.com",
+					"raw": "http://localhost:8080/user/favorites?email=admin@admin.com",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -74,7 +74,7 @@
 					"query": [
 						{
 							"key": "email",
-							"value": "mario.nikolov@gmail.com"
+							"value": "admin@admin.com"
 						}
 					]
 				}
@@ -87,7 +87,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/user/get?email=mario.nikolov@gmail.com&password=IAmMario123",
+					"raw": "http://localhost:8080/user/get?email=admin@admin.com&password=LDpDgplq",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -100,11 +100,11 @@
 					"query": [
 						{
 							"key": "email",
-							"value": "mario.nikolov@gmail.com"
+							"value": "admin@admin.com"
 						},
 						{
 							"key": "password",
-							"value": "IAmMario123"
+							"value": "LDpDgplq"
 						}
 					]
 				}
@@ -173,7 +173,7 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/user/favorites/add?courseName=Algebra&email=mario.nikolov@gmail.com",
+					"raw": "http://localhost:8080/user/favorites/add?courseName=Algebra&email=admin@admin.com",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -191,7 +191,7 @@
 						},
 						{
 							"key": "email",
-							"value": "mario.nikolov@gmail.com"
+							"value": "admin@admin.com"
 						}
 					]
 				}
@@ -223,6 +223,32 @@
 						{
 							"key": "email",
 							"value": "mario.nikolov@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User by email",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/get-by-email?email=admin@admin.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"get-by-email"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "admin@admin.com"
 						}
 					]
 				}

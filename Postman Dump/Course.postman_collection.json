@@ -80,6 +80,67 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Edit Course",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"groups\": \"Mathematics\",\r\n    \"name\": \"Algebra\",\r\n    \"type\": \"Pdf\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/courses/edit?oldName=Algebra",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"courses",
+						"edit"
+					],
+					"query": [
+						{
+							"key": "oldName",
+							"value": "Algebra"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search by phrase",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/courses/search?phrase=Algebra",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"courses",
+						"search"
+					],
+					"query": [
+						{
+							"key": "phrase",
+							"value": "Algebra"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
