@@ -21,7 +21,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/material/add-new-material?courseName=Microcells",
+					"raw": "http://localhost:8080/material/add-new-material?courseName=Algebra",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -34,7 +34,7 @@
 					"query": [
 						{
 							"key": "courseName",
-							"value": "Microcells"
+							"value": "Algebra"
 						}
 					]
 				}
@@ -93,7 +93,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/material/get-by-course?courseName=Microcells",
+					"raw": "http://localhost:8080/material/get-by-course?courseName=Algebra",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -106,7 +106,7 @@
 					"query": [
 						{
 							"key": "courseName",
-							"value": "Microcells"
+							"value": "Algebra"
 						}
 					]
 				}
@@ -132,6 +132,41 @@
 					"query": [
 						{
 							"key": "name",
+							"value": "Lecture 1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Material",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"filePath\": \"C:\\\\Documents\\\\Lecture1.mp4\",\r\n  \"group\": \"Biology\",\r\n  \"name\": \"Lecture 1\",\r\n  \"type\": \"Video\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/material/edit?oldName=Lecture 1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"material",
+						"edit"
+					],
+					"query": [
+						{
+							"key": "oldName",
 							"value": "Lecture 1"
 						}
 					]
