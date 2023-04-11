@@ -59,7 +59,6 @@ public class CourseRepositoryService {
         }
 
         courseInDB.setName(courseToModify.getName());
-        courseInDB.setMaterialType(courseToModify.getType());
         courseInDB.setGroup(courseToModify.getGroups());
 
         courseRepository.save(courseInDB);

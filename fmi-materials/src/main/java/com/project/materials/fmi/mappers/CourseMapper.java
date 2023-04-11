@@ -2,6 +2,8 @@ package com.project.materials.fmi.mappers;
 
 
 import com.project.materials.fmi.dtos.CourseDTO;
+import com.project.materials.fmi.enums.Groups;
+import com.project.materials.fmi.enums.MaterialType;
 import com.project.materials.fmi.models.Course;
 
 public class CourseMapper {
@@ -12,7 +14,6 @@ public class CourseMapper {
 
         CourseDTO dto = new CourseDTO();
         dto.setName(course.getName());
-        dto.setType(course.getMaterialType());
         dto.setGroups(course.getGroup());
         return dto;
     }
@@ -25,7 +26,7 @@ public class CourseMapper {
             return null;
         }
         course.setName(dto.getName());
-        course.setMaterialType(dto.getType());
+//        course.setMaterialType(MaterialType.Audio);
         course.setGroup(dto.getGroups());
         return course;
     }

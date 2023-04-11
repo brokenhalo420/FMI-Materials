@@ -43,6 +43,17 @@ public class MaterialRepositoryService {
         queryCourse.getMaterials().add(entry);
         courseRepository.save(queryCourse);
     }
+    public MaterialDTO addMaterialNew(String courseName, MaterialDTO material){
+        Material entry = new Material();
+        Course queryCourse = courseRepository.findAll().stream().filter(x -> x.getName().equals(courseName))
+                .findFirst().get();
+        MaterialMapper.fromDTO(entry,material);
+        entry.setCourseId(queryCourse);
+        materialRepository.save(entry);
+        queryCourse.getMaterials().add(entry);
+        courseRepository.save(queryCourse);
+        return MaterialMapper.toDTO(entry);
+    }
 
     public void deleteMaterialByName(String name){
         Material material;

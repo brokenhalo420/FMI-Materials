@@ -11,24 +11,24 @@ public class UserMapper {
         }
 
         UserDTO dto = new UserDTO();
+        dto.setId(user.getId());
         dto.setName(user.getName());
         dto.setEmail(user.getEmail());
-        dto.setPassword(user.getPassword());
         dto.setType(user.getType());
+
         return dto;
     }
 
-    public static User fromDTO(User user, UserDTO dto){
-        if(user == null){
-            return null;
-        }
+    public static User fromDTO(UserDTO dto){
         if(dto == null){
             return null;
         }
+
+        User user = new User();
         user.setEmail(dto.getEmail());
         user.setName(dto.getName());
-        user.setPassword(dto.getPassword());
         user.setType(dto.getType());
+
         return user;
     }
 }

@@ -42,8 +42,15 @@ public class UserRepositoryService {
     }
 
     public void addUser(UserDTO user){
-        User entry = new User();
-        userRepository.save(UserMapper.fromDTO(entry,user));
+        userRepository.save(UserMapper.fromDTO(user));
+    }
+
+    public UserDTO updateUser(UserDTO user) {
+        User userInDb = userRepository.getReferenceById(user.getId());
+        userInDb.setEmail(user.getEmail());
+        userInDb.setName(user.getName());
+        userInDb.setType(user.getType());
+        return UserMapper.toDTO(userRepository.save(userInDb));
     }
 
     public void deleteUser(String email, String password){
@@ -56,6 +63,18 @@ public class UserRepositoryService {
             return;
         }
         userRepository.delete(user);
+    }
+
+    public UserDTO deleteUserNew(UserDTO userDTO) {
+        UserDTO user;
+        try {
+            user = UserMapper.toDTO(userRepository.getReferenceById(userDTO.getId()));
+        }
+        catch (NoSuchElementException e) {
+            throw new RuntimeException();
+        }
+        userRepository.deleteById(userDTO.getId());
+        return user;
     }
 
     public Iterable<CourseDTO> getFavorites(String email){
