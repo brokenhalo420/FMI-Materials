@@ -1,0 +1,28 @@
+<mat-form-field>
+  <mat-label>Search Courses</mat-label>
+  <input matInput [(ngModel)]="searchQuery" placeholder="Enter course name">
+</mat-form-field>
+
+<mat-list>
+  <div mat-subheader>Courses</div>
+
+  <mat-list-item [id]="'mli' + i" *ngFor="let course of courses | filter:searchQuery; let i = index" (click)="getCorrespondingMaterials(course, i, course == selectedCourse)" style="height: auto">
+    <span class="material-icons" (click)="displayMaterialCreation(course)">
+      add
+    </span>
+    <mat-icon matListItemIcon>folder</mat-icon>
+
+    <div matListItemTitle>{{course.name}}</div>
+    <div *ngIf="course == selectedCourse">
+      <div *ngFor="let material of materials">
+        <div>{{material.name}}</div>
+      </div>
+    </div>
+
+  </mat-list-item>
+  <mat-divider></mat-divider>
+</mat-list>
+
+<button *ngIf="isAdmin" mat-flat-button color="primary" type="submit" value="Submit" (click)="displayCourseCreation()">
+  Create Course
+</button>

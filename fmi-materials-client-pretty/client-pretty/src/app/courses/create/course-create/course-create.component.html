@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Create a course</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Course Name</mat-label>
+    <input matInput [(ngModel)]="courseName">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Select</mat-label>
+    <mat-select [(ngModel)]="courseGroups" multiple>
+      <mat-option *ngFor="let group of Group" [value] = group> {{group}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-button (click)="createCourse()" [mat-dialog-close]="courseName" cdkFocusInitial>Submit</button>
+</div>
