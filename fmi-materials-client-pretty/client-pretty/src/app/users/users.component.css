@@ -1,0 +1,57 @@
+/*.mat-mdc-list-item-unscoped-content {*/
+/*  display: flex !important;*/
+/*  flex-direction: row !important;*/
+/*  justify-content: space-between !important;*/
+/*  align-items: center !important;*/
+/*!*}*!*/
+/*mat-list-item * {*/
+/*  display: flex;*/
+/*}*/
+/*#icon {*/
+/*  flex: 1;*/
+/*}*/
+/*#button {*/
+/*  flex: 1;*/
+/*}*/
+/*#form {*/
+/*  flex: 1;*/
+/*}*/
+/*#email {*/
+/*  flex: 1;*/
+/*}*/
+
+.mat-mdc-list-item-unscoped-content, .mdc-list-item__primary-text {
+  display:flex !important;
+}
+mat-form-field {
+  margin-bottom: -1.5em;
+  background: white;
+}
+
+.role-cell {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.table-div {
+  max-width: 80%;
+}
+
+.mat-dialog-container {
+  width: 500px !important;
+}
+
+button {
+  margin-top: 10px;
+}
+
+mat-form-field {
+  max-width: 50%;
+}
+
+.table-div {
+  margin: auto;
+  margin-top:2%;
+}
+

@@ -1,0 +1,15 @@
+#login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+}
+label {
+  margin-top: 20px;
+}
+.error-snackbar {
+  background-color: #e57373;
+  color: white;
+  font-weight: bold;
+}
