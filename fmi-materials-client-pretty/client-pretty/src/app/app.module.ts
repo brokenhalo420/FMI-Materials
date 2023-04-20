@@ -34,6 +34,7 @@ import { MaterialCreateComponent } from './material-create/material-create.compo
 import {MatCardModule} from "@angular/material/card";
 import { FilterPipe } from './filter.pipe';
 import { ProfileComponent } from './profile/profile.component';
+import { FavoritesComponent } from './favorites/favorites.component';
 
 
 
@@ -51,7 +52,8 @@ import { ProfileComponent } from './profile/profile.component';
     MaterialsComponent,
     MaterialCreateComponent,
     FilterPipe,
-    ProfileComponent
+    ProfileComponent,
+    FavoritesComponent
   ],
   imports: [
     BrowserModule,

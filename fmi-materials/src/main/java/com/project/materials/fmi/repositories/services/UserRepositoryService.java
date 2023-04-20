@@ -1,4 +1,5 @@
 package com.project.materials.fmi.repositories.services;
+
 import com.project.materials.fmi.dtos.CourseDTO;
 import com.project.materials.fmi.dtos.UserDTO;
 import com.project.materials.fmi.exception.WrongPasswordException;
@@ -8,7 +9,11 @@ import com.project.materials.fmi.models.Course;
 import com.project.materials.fmi.models.User;
 import com.project.materials.fmi.repositories.contracts.CourseDB;
 import com.project.materials.fmi.repositories.contracts.UserDB;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
@@ -17,12 +22,18 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
+@RequiredArgsConstructor
+@Primary
 public class UserRepositoryService {
     private UserDB userRepository;
     private CourseDB courseRepository;
-    
+
     @Autowired
-    public UserRepositoryService(UserDB userRepository, CourseDB courseRepository){
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserRepositoryService(UserDB userRepository, CourseDB courseRepository) {
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
     }
@@ -50,30 +61,29 @@ public class UserRepositoryService {
     }//TODO use encryption and check in another class
 
 
-
-    public Iterable<UserDTO> getUsersByName(String name){
+    public Iterable<UserDTO> getUsersByName(String name) {
         return userRepository.findAll().stream().filter(user -> name.equals(user.getName()))
                 .map(UserMapper::toDTO).collect(Collectors.toList());
     }
 
-    public UserDTO getUserByEmail(String email){
+    public UserDTO getUserByEmail(String email) {
         return userRepository.findAll().stream().filter(x -> email.equals(x.getEmail())).map(UserMapper::toDTO).findFirst().get();
     }
 
-    private User getRealUserByEmail(String email){
+    public User getRealUserByEmail(String email) {
         return userRepository.findAll().stream().filter(x -> email.equals(x.getEmail())).findFirst().get();
     }
 
-    public Optional<UserDTO> getUser(String email, String password){
+    public Optional<UserDTO> getUser(String email, String password) {
         return userRepository.findAll().stream()
-                .filter(user -> email.equals(user.getEmail()) && password.equals(user.getPassword()))
+                .filter(user -> email.equals(user.getEmail()) && passwordEncoder.matches(password, user.getPassword()))
                 .map(UserMapper::toDTO).findFirst();
     }
 
-    public void addUser(User user){
+    public void addUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
-
 
 
     public UserDTO updateUser(UserDTO user) {
@@ -84,13 +94,13 @@ public class UserRepositoryService {
         return UserMapper.toDTO(userRepository.save(userInDb));
     }
 
-    public void deleteUser(String email, String password){
+    public void deleteUser(String email, String password) {
         User user;
-        try{
+        try {
             user = userRepository.findAll().stream()
                     .filter(x -> email.equals(x.getEmail()) && password.equals(x.getPassword()))
                     .findFirst().get();
-        } catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             return;
         }
         userRepository.delete(user);
@@ -100,26 +110,25 @@ public class UserRepositoryService {
         UserDTO user;
         try {
             user = UserMapper.toDTO(userRepository.getReferenceById(userDTO.getId()));
-        }
-        catch (NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
             throw new RuntimeException();
         }
         userRepository.deleteById(userDTO.getId());
         return user;
     }
 
-    public Iterable<CourseDTO> getFavorites(String email){
-        return this.userRepository.findAll().stream().filter(x-> x.getEmail().equals(email)).findFirst().get().getFavorites()
+    public Iterable<CourseDTO> getFavorites(String email) {
+        return this.userRepository.findAll().stream().filter(x -> x.getEmail().equals(email)).findFirst().get().getFavorites()
                 .stream().map(CourseMapper::toDTO).collect(Collectors.toList());
     }
 
-    public List<CourseDTO> getFavoritesNew(String email){
-        return this.userRepository.findAll().stream().filter(x-> x.getEmail().equals(email)).findFirst().get().getFavorites()
+    public List<CourseDTO> getFavoritesNew(String email) {
+        return this.userRepository.findAll().stream().filter(x -> x.getEmail().equals(email)).findFirst().get().getFavorites()
                 .stream().map(CourseMapper::toDTO).collect(Collectors.toList());
     }
 
 
-    public void addToFavorites(String email, String courseName){
+    public void addToFavorites(String email, String courseName) {
         try {
             var user = this.userRepository.findAll().stream().filter(x -> x.getEmail().equals(email)).findFirst().get();
             var course = this.courseRepository.findAll().stream().filter(x -> x.getName().equals(courseName))
@@ -130,13 +139,12 @@ public class UserRepositoryService {
 
             this.userRepository.save(user);
             this.courseRepository.save(course);
-        }
-        catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             return;
         }
     }
 
-    public void removeFromFavorites(String email, String courseName){
+    public void removeFromFavorites(String email, String courseName) {
         try {
             var user = this.userRepository.findAll().stream().filter(x -> x.getEmail().equals(email)).findFirst().get();
             var course = this.courseRepository.findAll().stream().filter(x -> x.getName().equals(courseName))
@@ -147,8 +155,7 @@ public class UserRepositoryService {
 
             this.userRepository.save(user);
             this.courseRepository.save(course);
-        }
-        catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             return;
         }
     }

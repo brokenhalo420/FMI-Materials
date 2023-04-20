@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {User} from "../services/user-service/user";
 import {UserService} from "../services/user-service/user.service";
-import {Observable} from "rxjs";
+import {Observable, timeout} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {RegisterComponent} from "../register/register.component";
 
@@ -53,6 +53,7 @@ export class UsersComponent {
   }
 
   openRegisterDialog() {
+    console.log("here");
     const dialogRef = this.dialog.open(RegisterComponent, {
       width: '1000px',
       height: '500px',
@@ -60,6 +61,7 @@ export class UsersComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      timeout(1000);
       this.getAllUsers();
       console.log(`Dialog result: ${result}`);
     });

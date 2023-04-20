@@ -1,0 +1,22 @@
+
+<mat-list>
+  <div mat-subheader>Courses</div>
+
+  <mat-list-item [id]="'mli' + i" *ngFor="let course of courses; let i = index" (click)="getCorrespondingMaterials(course, i, course == selectedCourse)" style="height: auto">
+    <span class="material-icons" *ngIf="isFavorite(course)" (click) = "removeFromFavorites(course)">star</span>
+    <span class="material-icons" *ngIf="!isFavorite(course)" (click)="addToFavorites(course)">star_border</span>
+    <span class="material-icons" (click)="displayMaterialCreation(course)">
+      add
+    </span>
+    <mat-icon matListItemIcon>folder</mat-icon>
+
+    <div matListItemTitle>{{course.name}}</div>
+    <div *ngIf="course == selectedCourse">
+      <div *ngFor="let material of materials">
+        <div>{{material.name}}</div>
+      </div>
+    </div>
+
+  </mat-list-item>
+  <mat-divider></mat-divider>
+</mat-list>

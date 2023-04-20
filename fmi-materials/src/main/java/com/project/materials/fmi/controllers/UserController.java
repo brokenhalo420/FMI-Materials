@@ -2,11 +2,15 @@ package com.project.materials.fmi.controllers;
 
 import com.project.materials.fmi.dtos.CourseDTO;
 import com.project.materials.fmi.dtos.UserDTO;
+import com.project.materials.fmi.exception.WrongPasswordException;
 import com.project.materials.fmi.models.Course;
 import com.project.materials.fmi.models.User;
 import com.project.materials.fmi.repositories.services.UserRepositoryService;
+import com.project.materials.fmi.security.AuthService;
 import io.swagger.annotations.Api;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.builders.ResponseBuilder;
@@ -20,9 +24,13 @@ import java.util.Optional;
 @Api(tags = "User Controller")
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
     @Autowired
     private UserRepositoryService userService;
+
+
+    private final AuthService authService;
 
     @GetMapping("/all")
     public Iterable<UserDTO> getAllUsers() {
@@ -43,6 +51,10 @@ public class UserController {
     public Optional<UserDTO> login(@RequestBody Map<String, String> loginData) {
         String username = loginData.get("username");
         String password = loginData.get("password");
+        UserDTO user = authService.login(username, password);
+        if (user == null) {
+            throw new WrongPasswordException();
+        }
         return userService.getUser(username, password);
     }
 
