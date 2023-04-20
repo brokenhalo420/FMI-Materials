@@ -8,6 +8,7 @@ import com.project.materials.fmi.repositories.contracts.CourseDB;
 import com.project.materials.fmi.repositories.contracts.MaterialDB;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,11 +23,11 @@ public class CourseRepositoryService {
         this.materialRepository = materialRepository;
     }
 
-    public Iterable<CourseDTO> getAllCourses() {
+    public List<CourseDTO> getAllCourses() {
         return courseRepository.findAll().stream().map(CourseMapper::toDTO).collect(Collectors.toList());
     }
 
-    public Iterable<CourseDTO> getCoursesByName(String name){
+    public List<CourseDTO> getCoursesByName(String name){
         return courseRepository.findAll().stream().filter(course -> course.getName().contains(name)).map(CourseMapper::toDTO)
                 .collect(Collectors.toList());
     }

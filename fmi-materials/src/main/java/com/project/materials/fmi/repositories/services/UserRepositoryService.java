@@ -1,13 +1,18 @@
 package com.project.materials.fmi.repositories.services;
 import com.project.materials.fmi.dtos.CourseDTO;
 import com.project.materials.fmi.dtos.UserDTO;
+import com.project.materials.fmi.exception.WrongPasswordException;
 import com.project.materials.fmi.mappers.CourseMapper;
 import com.project.materials.fmi.mappers.UserMapper;
+import com.project.materials.fmi.models.Course;
 import com.project.materials.fmi.models.User;
 import com.project.materials.fmi.repositories.contracts.CourseDB;
 import com.project.materials.fmi.repositories.contracts.UserDB;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,9 +27,29 @@ public class UserRepositoryService {
         this.courseRepository = courseRepository;
     }
 
-    public Iterable<UserDTO> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
         return userRepository.findAll().stream().map(UserMapper::toDTO).collect(Collectors.toList());
     }
+
+    public UserDTO updatePassword(String email, String oldPassword, String newPassword) {
+        UserDTO user = getUserByEmail(email);
+        if (user == null) {
+            throw new EntityNotFoundException("The user with the email " + email + " was not found");
+        }
+        User realUser = userRepository.getReferenceById(user.getId());
+        if (comparePasswords(realUser.getPassword(), oldPassword)) {
+            realUser.setPassword(newPassword);
+            userRepository.save(realUser);
+            return user;
+        }
+        throw new WrongPasswordException("Old password does not match with the real password.");
+    }
+
+    private boolean comparePasswords(String oldPassword, String realPassword) {
+        return oldPassword.equals(realPassword);
+    }//TODO use encryption and check in another class
+
+
 
     public Iterable<UserDTO> getUsersByName(String name){
         return userRepository.findAll().stream().filter(user -> name.equals(user.getName()))
@@ -35,15 +60,21 @@ public class UserRepositoryService {
         return userRepository.findAll().stream().filter(x -> email.equals(x.getEmail())).map(UserMapper::toDTO).findFirst().get();
     }
 
+    private User getRealUserByEmail(String email){
+        return userRepository.findAll().stream().filter(x -> email.equals(x.getEmail())).findFirst().get();
+    }
+
     public Optional<UserDTO> getUser(String email, String password){
         return userRepository.findAll().stream()
                 .filter(user -> email.equals(user.getEmail()) && password.equals(user.getPassword()))
                 .map(UserMapper::toDTO).findFirst();
     }
 
-    public void addUser(UserDTO user){
-        userRepository.save(UserMapper.fromDTO(user));
+    public void addUser(User user){
+        userRepository.save(user);
     }
+
+
 
     public UserDTO updateUser(UserDTO user) {
         User userInDb = userRepository.getReferenceById(user.getId());
@@ -82,6 +113,12 @@ public class UserRepositoryService {
                 .stream().map(CourseMapper::toDTO).collect(Collectors.toList());
     }
 
+    public List<CourseDTO> getFavoritesNew(String email){
+        return this.userRepository.findAll().stream().filter(x-> x.getEmail().equals(email)).findFirst().get().getFavorites()
+                .stream().map(CourseMapper::toDTO).collect(Collectors.toList());
+    }
+
+
     public void addToFavorites(String email, String courseName){
         try {
             var user = this.userRepository.findAll().stream().filter(x -> x.getEmail().equals(email)).findFirst().get();
@@ -114,5 +151,19 @@ public class UserRepositoryService {
         catch (NoSuchElementException e){
             return;
         }
+    }
+
+    @Transactional
+    public CourseDTO addToFavoritesNew(Long id, String email) {
+        Course course = courseRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+        this.getRealUserByEmail(email).getFavorites().add(course);
+        return CourseMapper.toDTO(course);
+    }
+
+    @Transactional
+    public CourseDTO removeFromFavoritesNew(Long id, String email) {
+        Course course = courseRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+        this.getRealUserByEmail(email).getFavorites().remove(course);
+        return CourseMapper.toDTO(course);
     }
 }
