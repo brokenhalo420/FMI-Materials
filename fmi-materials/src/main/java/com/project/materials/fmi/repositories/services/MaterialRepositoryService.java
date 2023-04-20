@@ -8,8 +8,11 @@ import com.project.materials.fmi.models.Material;
 import com.project.materials.fmi.repositories.contracts.CourseDB;
 import com.project.materials.fmi.repositories.contracts.MaterialDB;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,35 +22,49 @@ public class MaterialRepositoryService {
     private CourseDB courseRepository;
 
     @Autowired
-    public MaterialRepositoryService(MaterialDB materialRepository, CourseDB courseRepository){
+    public MaterialRepositoryService(MaterialDB materialRepository, CourseDB courseRepository) {
         this.materialRepository = materialRepository;
         this.courseRepository = courseRepository;
     }
 
-    public Iterable<MaterialDTO> getAllMaterials() {
+    public List<MaterialDTO> getAllMaterials() {
         return materialRepository.findAll().stream().map(MaterialMapper::toDTO).collect(Collectors.toList());
     }
 
-    public Iterable<MaterialDTO> getMaterialsByName(String name){
+    public Iterable<MaterialDTO> getMaterialsByName(String name) {
         return materialRepository.findAll().stream().filter(material -> name.equals(material.getName()))
                 .map(MaterialMapper::toDTO).collect(Collectors.toList());
     }
 
-    public void addMaterial(String courseName, MaterialDTO material){
+    @Transactional
+    public void addMaterial(String courseName, MaterialDTO material) {
         Material entry = new Material();
         Course queryCourse = courseRepository.findAll().stream().filter(x -> x.getName().equals(courseName))
-        .findFirst().get();
-        MaterialMapper.fromDTO(entry,material);
+                .findFirst().get();
+        MaterialMapper.fromDTO(entry, material);
         entry.setCourseId(queryCourse);
         materialRepository.save(entry);
         queryCourse.getMaterials().add(entry);
         courseRepository.save(queryCourse);
     }
-    public MaterialDTO addMaterialNew(String courseName, MaterialDTO material){
+
+    @Transactional
+    public void addMaterialNew(Long courseId, MaterialDTO material) {
+        Material entry = new Material();
+        Course queryCourse = courseRepository.findById(courseId).orElseThrow(() -> new EntityNotFoundException());
+        MaterialMapper.fromDTO(entry, material);
+        entry.setCourseId(queryCourse);
+        materialRepository.save(entry);
+        queryCourse.getMaterials().add(entry);
+        courseRepository.save(queryCourse);
+    }
+
+    @Transactional
+    public MaterialDTO addMaterialNew(String courseName, MaterialDTO material) {
         Material entry = new Material();
         Course queryCourse = courseRepository.findAll().stream().filter(x -> x.getName().equals(courseName))
                 .findFirst().get();
-        MaterialMapper.fromDTO(entry,material);
+        MaterialMapper.fromDTO(entry, material);
         entry.setCourseId(queryCourse);
         materialRepository.save(entry);
         queryCourse.getMaterials().add(entry);
@@ -55,11 +72,11 @@ public class MaterialRepositoryService {
         return MaterialMapper.toDTO(entry);
     }
 
-    public void deleteMaterialByName(String name){
+    public void deleteMaterialByName(String name) {
         Material material;
-        try{
+        try {
             material = materialRepository.findAll().stream().filter(x -> x.getName().equals(name)).findFirst().get();
-        } catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             return;
         }
         Course course = material.getCourseId();
@@ -68,17 +85,17 @@ public class MaterialRepositoryService {
         courseRepository.save(course);
     }
 
-    public Iterable<MaterialDTO> getMaterialsByCourse(String courseName){
+    public Iterable<MaterialDTO> getMaterialsByCourse(String courseName) {
         Course queryCourse = this.courseRepository.findAll().stream().filter(x -> courseName.equals(x.getName())).findFirst().get();
 
-        if(queryCourse == null){
+        if (queryCourse == null) {
             return new ArrayList<MaterialDTO>();
         }
 
         return queryCourse.getMaterials().stream().map(MaterialMapper::toDTO).collect(Collectors.toList());
     }
 
-    public void editMaterial(String name, MaterialDTO material){
+    public void editMaterial(String name, MaterialDTO material) {
         Material materialInDB = this.materialRepository.findAll().stream().filter(x -> x.getName().equals(name)).findFirst().get();
 
         materialInDB.setName(material.getName());

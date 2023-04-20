@@ -1,0 +1,43 @@
+.profile-page-div {
+  display: flex;
+  flex-direction: row;
+  flex: 1 2;
+}
+
+img {
+  width: 50%;
+  min-width: 50%;
+  height: 50%;
+  margin: auto;
+}
+
+.profile-card {
+  width: 700px;
+}
+
+.password-fields {
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-mdc-card-header {
+  margin: auto;
+}
+
+mat-card-content {
+  width: 50%;
+}
+
+.email-and-role * {
+  margin: auto;
+}
+
+.mat-mdc-card {
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}

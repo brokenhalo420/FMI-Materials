@@ -13,6 +13,7 @@
   </div>
   <div class="right-items" *ngIf="isLoggedIn()">
     Hello, {{getCookie('user')}}
+    <a mat-button routerLink="/profile">Profile</a>
     <a mat-button (click)="logout()" routerLink="/login">Logout</a>
   </div>
 </mat-toolbar>

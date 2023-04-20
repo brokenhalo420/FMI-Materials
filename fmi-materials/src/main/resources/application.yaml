@@ -1,19 +1,19 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/library
+    url: jdbc:mysql://localhost:3306/library2?createDatabaseIfNotExist=true
     username: root
     password: root
     hikari:
-      jdbc-url: jdbc:mysql://localhost:3306/library
+      jdbc-url: jdbc:mysql://localhost:3306/library2?createDatabaseIfNotExist=true
 
   jpa:
     generate-ddl: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
   mvc:
-    pathmatch:
+    path match:
       matching-strategy: ant_path_matcher

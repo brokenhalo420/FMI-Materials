@@ -33,6 +33,7 @@ import { MaterialsComponent } from './materials/materials.component';
 import { MaterialCreateComponent } from './material-create/material-create.component';
 import {MatCardModule} from "@angular/material/card";
 import { FilterPipe } from './filter.pipe';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -49,7 +50,8 @@ import { FilterPipe } from './filter.pipe';
     CourseCreateComponent,
     MaterialsComponent,
     MaterialCreateComponent,
-    FilterPipe
+    FilterPipe,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

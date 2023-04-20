@@ -11,8 +11,8 @@ public class CourseMapper {
         if(course == null){
             return null;
         }
-
         CourseDTO dto = new CourseDTO();
+        dto.setId(course.getId());
         dto.setName(course.getName());
         dto.setGroups(course.getGroup());
         return dto;

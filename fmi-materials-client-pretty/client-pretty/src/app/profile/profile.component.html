@@ -1,0 +1,57 @@
+<div class="profile-page-div">
+  <div>
+    <div class="column">
+      <mat-card class="profile-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>{{currentUser.name}}</mat-card-title>
+          <mat-card-subtitle>{{currentUser.type}}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      </mat-card>
+      <div class="email-and-role">
+        <mat-card-content>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput #emailInput [value]="currentUser.email" [type]="hide ? 'email' : 'text'">
+          </mat-form-field>
+          <button mat-flat-button (click) = "saveEmail(emailInput.value)">Save</button>
+        </mat-card-content>
+        <mat-card-content (click)="showPasswordFields = true">Change my password</mat-card-content>
+        <div *ngIf="showPasswordFields" class="password-fields">
+          <mat-form-field appearance="outline">
+            <mat-label>Enter your password</mat-label>
+            <input matInput #oldPassword [type]="hide ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Enter your new password</mat-label>
+            <input matInput #newPassword1 [type]="hide ? 'password' : 'text'" (input)="checkPasswords(newPassword1.value, newPassword2.value)" >
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Re-enter your new password</mat-label>
+            <input matInput #newPassword2 [type]="hide ? 'password' : 'text'" (input)="checkPasswords(newPassword1.value, newPassword2.value)">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-error *ngIf="!passwordsMatch">Passwords do not match</mat-error>
+          <button (click)="showPasswordFields = false" mat-flat-button>Cancel</button>
+          <button mat-flat-button [disabled]="!passwordsMatch || oldPassword.value.length == 0 || newPassword1.value.length == 0" (click) = "editPassword(oldPassword.value, newPassword1.value)">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="column2" style = "background:red">
+<!--    <mat-card-header>About Me:</mat-card-header>-->
+<!--    <mat-card>favs</mat-card>-->
+  </div>
+</div>

@@ -32,6 +32,7 @@ export class LoginComponent {
         this.cookieService.deleteAll();
         document.cookie += "user=" + x.name;
         this.cookieService.set('admin', x.type.valueOf().toString());
+        this.cookieService.set('email', x.email);
         this.successfulLogin = true;
         this.router.navigate(['/']);
       }

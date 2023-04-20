@@ -7,6 +7,8 @@
   <div mat-subheader>Courses</div>
 
   <mat-list-item [id]="'mli' + i" *ngFor="let course of courses | filter:searchQuery; let i = index" (click)="getCorrespondingMaterials(course, i, course == selectedCourse)" style="height: auto">
+    <span class="material-icons" *ngIf="isFavorite(course)" (click) = "removeFromFavorites(course)">star</span>
+    <span class="material-icons" *ngIf="!isFavorite(course)" (click)="addToFavorites(course)">star_border</span>
     <span class="material-icons" (click)="displayMaterialCreation(course)">
       add
     </span>
